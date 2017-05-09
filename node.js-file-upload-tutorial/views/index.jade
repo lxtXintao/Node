@@ -1,0 +1,8 @@
+ext
+//- Jade是一款基于haml的html模版引擎，采用JavaScript实现，可以方便地在Node.js、Yeoman等框架中使用。
+//- 在Jade模板里可以运用成熟的JavaScript代码。 
+block content
+  h1 Upload File
+    form(method="POST", action="/upload", enctype="multipart/form-data")
+        input(type="file", name="file")
+input(type="submit")
