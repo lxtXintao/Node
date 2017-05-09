@@ -1,0 +1,32 @@
+'use strict';
+
+
+var immediate = require('immediate');
+
+
+function INTERNAL(){}
+function isFunction(func){
+    return typeof obj === 'function';
+}
+function isArray(arr){
+    return Object.prototype.toString.call(arr) === '[object Array]';//判断是否是数组
+}
+
+var PENDING = 0;
+var FULFILLED = 1;
+var REJECTED = 2;
+
+module.exports = Promise;
+
+
+function Promise(resolver){
+    if(!isFunction(resolver)){
+        throw new TypeError('resolver must be a function');
+    }
+    this.state = PENDING;//当前promise的状态
+    this.value = void 0;//当 state 是 FULFILLED 时存储返回值，当 state 是 REJECTED 时存储错误。
+    this.queue = [];
+    if(resolver !== INTERNAL){
+        safeiyResolveThen(this,resolver);
+    }
+}
