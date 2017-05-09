@@ -1,0 +1,26 @@
+function doResolve(self, value) {
+  try {
+    var then = getThen(value);
+    if (then) {
+      safelyResolveThen(self, then);
+    } else {
+      self.state = FULFILLED;
+      self.value = value;
+      self.queue.forEach(function (queueItem) {
+        queueItem.callFulfilled(value);
+      });
+    }
+    return self;
+  } catch (error) {
+    return doReject(self, error);
+  }
+}
+
+function doReject(self, error) {
+  self.state = REJECTED;
+  self.value = error;
+  self.queue.forEach(function (queueItem) {
+    queueItem.callRejected(error);
+  });
+  return self;
+}
